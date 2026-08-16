@@ -1,0 +1,21 @@
+{
+
+  "version": 2,
+
+  "git": {
+    "deploymentEnabled": false
+  },
+
+  "buildCommand": "npm run build",
+
+  "installCommand": "npm install",
+
+  "devCommand": "npm run dev",
+
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
