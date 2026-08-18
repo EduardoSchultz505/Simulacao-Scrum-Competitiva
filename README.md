@@ -1,81 +1,89 @@
-# PAINEL DE AVALIAÇÃO — SIMULAÇÃO SCRUM COMPETITIVA
+# Simulação Scrum Competitiva
 
-## COMO USAR
+Trabalho da disciplina **Desenvolvimento Web 2**.
 
-### Requisitos
+Esse sistema de apoio à avaliação da Simulação Scrum Competitiva foi refeita, agora, utilizando a biblioteca React. O código original foi proporcionado pelo professor Renato Castro. O grupo deveria dividir o código e organizá-lo em componentes, adicionar função de LocalStorage e hospedar o site, algo que anteriormente não possuia.
 
-- Node.js
-- npm
+## Integrantes
 
-### Instalação
+- Eduardo Schultz de Oliveira
+- Evelyn Thomaz Mafessoni
+- Guilherme Otávio Riffel Konig
+- Isabella Vitória Fracaro
 
-1. Clone ou baixe este repositório para sua máquina.
-2. Abra o terminal na pasta do projeto.
-3. Instale as dependências:
+## Link do sistema hospedado
+
+> _(placeholder — adicionar link após o deploy)_
+
+## Pré-requisitos
+
+- [Node.js](https://nodejs.org/)
+
+## Instalação
+
+Clone o repositório e instale as dependências:
 
 ```bash
+git clone <link-do-repositorio>
+cd <pasta-do-projeto>
 npm install
 ```
 
-4. Execute o projeto:
+## Executando localmente
 
 ```bash
 npm run dev
 ```
 
-Após executar o comando, o terminal exibirá o endereço local para acessar o sistema.
+Isso inicia o servidor de desenvolvimento do Vite. Por padrão, o sistema fica disponível em:
 
-## ESTRUTURA DO PROJETO
-
-```text
-src/
-├── components/     -> componentes reutilizáveis da aplicação
-├── pages/          -> telas/abas do sistema
-├── data/           -> dados utilizados pela aplicação
-├── assets/         -> imagens fornecidas para o projeto
-├── App.jsx         -> componente principal
-└── main.jsx        -> ponto de entrada da aplicação
-
-public/             -> arquivos públicos e imagens
-package.json        -> dependências e scripts do projeto
+```
+http://localhost:5173
 ```
 
-## FUNCIONALIDADES
+Abra esse endereço no navegador.
 
-O sistema possui as seguintes áreas:
+## Funcionalidades
 
-- Configuração
-- Alunos
-- Escalação
-- Avaliação de papéis
-- Resultado Final
+- **Configuração**: identificação da turma, nomes das empresas, nomes dos times e pesos usados no cálculo da nota final.
+- **Alunos**: atribuição de papel, empresa e time para cada aluno, com busca por nome e importação de lista via planilha Excel (.xlsx).
+- **Escalação**: visão consolidada das equipes, com identidade visual de cada empresa/comprador.
+- **Avaliação por papel**: abas de Scrum Master, Owner/Stakeholder, Product Owner, Developers e Compradores (desempenho no papel e avaliação do produto).
+- **Corrupção & Sabotagem**: mecanismos de regras fixas do jogo, com pontuação calculada automaticamente.
+- **Resultado Final**: nota final por empresa, calculada como média ponderada das notas por papel, ajustada pelos pontos de corrupção/sabotagem.
+- **Persistência**: os dados são salvos automaticamente no `localStorage` do navegador a cada alteração, além de poderem ser salvos/baixados manualmente em `.json` e recarregados posteriormente.
 
-Os dados dos alunos são carregados para a aplicação e podem ser utilizados para preencher as avaliações e demais informações do sistema.
+## Tecnologias utilizadas
 
-## SALVAR E CARREGAR DADOS
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [SheetJS (xlsx)](https://sheetjs.com/) — leitura de planilhas Excel para importação de alunos
 
-Os dados da aplicação são armazenados no navegador utilizando o `localStorage`.
+## Estrutura do projeto
 
-O sistema possui duas formas de salvamento:
+```
+src/
+├── App.jsx                    # componente raiz — estado global, inicialização, orquestração
+├── components/
+│   ├── Alunos.jsx, Owner.jsx, ScrumMaster.jsx, ...  # renderização de cada aba
+│   ├── init.js                # registro dos listeners de UI (botões, fonte, abas)
+│   └── Topbar.jsx             # Barra superior
+├── data/
+│   ├── constants.js           # dados fixos (sprints, times, compradores, papéis, imagens, cores)
+│   └── datamodel.js           # construção do estado inicial (buildInitialData) e função auxiliar avg
+├── storage/
+│   ├── persistence.js         # leitura/escrita no localStorage
+│   └── save.js                # salvar/carregar/resetar dados
 
-### Salvamento automático
+├── utils/
+│   ├── domHelpers.js          # geração de HTML reutilizável (selects, inputs) e setByPath
+│   ├── eventDelegated.js      # delegação de eventos (mudanças de campo, renomear empresa, importar Excel)
+│   ├── fonte.js               # definição e alteração de tamanho de fonte
+│   ├── scoring.js             # cálculo de notas e pontuações (corrupção, sabotagem, nota final)
+│   └── tabs.js                # definição das abas e renderização do painel ativo
+```
 
-As alterações relevantes realizadas no sistema são salvas automaticamente no `localStorage`, evitando a perda dos dados durante a utilização.
+## Observações
 
-### Salvamento manual
-
-Também existe um botão para salvar os dados manualmente.
-
-Os dados salvos podem ser recuperados quando o sistema for aberto novamente no mesmo navegador.
-
-## IMAGENS
-
-As imagens dos fabricantes/setores utilizadas no sistema são as imagens fornecidas juntamente com o código-fonte original da atividade.
-
-## CONTROLE DE FONTE
-
-Os botões **"A−"**, **"A"** e **"A+"**, localizados no canto superior direito, aumentam ou diminuem o tamanho do texto em todo o painel, facilitando a leitura e a acessibilidade.
-
-## DESENVOLVIMENTO
-
-Projeto desenvolvido em React como adaptação do sistema original da Simulação Scrum Competitiva.
+- Os dados ficam salvos no navegador (`localStorage`) enquanto o sistema não for reiniciado ("Resetar"). O botão "Salvar" também gera um arquivo `.json` para backup manual, que pode ser recarregado posteriormente pelo botão "Carregar".
+- As imagens dos fabricantes/setores utilizadas são as fornecidas junto com o código-fonte original.
