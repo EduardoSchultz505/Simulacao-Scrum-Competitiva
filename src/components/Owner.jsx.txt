@@ -1,0 +1,33 @@
+import {
+  esc,
+  scoreSelectHtml,
+  obsInputHtml,
+  sprintCellLabel,
+} from "../utils/domHelpers";
+
+export function renderOwner(STATE) {
+  const rows = STATE.owner;
+  return `<div class="panel">
+    <h2>Stakeholder / Owner</h2>
+    <div class="desc">Avaliação de comunicação e negociação — independente dos pontos de corrupção, registrados na aba "Corrupção &amp; Sabotagem".</div>
+    <table><thead><tr>
+      <th>Sprint</th><th>Empresa</th><th>Comunicação com<br>a equipe (1-5)</th>
+      <th>Negociação com<br>compradores (1-5)</th><th>Alinhamento com<br>SM/PO sobre qualidade (1-5)</th>
+      <th>Nota Geral (1-5)</th><th>Observações</th></tr></thead><tbody>
+      ${rows
+        .map(
+          (r, i) => `<tr>
+        <td class="sprint-label">${esc(sprintCellLabel(rows, i, "sprint"))}</td>
+        <td>${esc(r.empresa)}</td>
+        <td>${scoreSelectHtml(r.comunicacao, `owner.${i}.comunicacao`)}</td>
+        <td>${scoreSelectHtml(r.negociacao, `owner.${i}.negociacao`)}</td>
+        <td>${scoreSelectHtml(r.alinhamento, `owner.${i}.alinhamento`)}</td>
+        <td>${scoreSelectHtml(r.notaGeral, `owner.${i}.notaGeral`)}</td>
+        <td>${obsInputHtml(r.obs, `owner.${i}.obs`)}</td>
+      </tr>`,
+        )
+        .join("")}
+    </tbody></table>
+    <div class="note note-blue">Esta nota avalia o desempenho no papel — não confunda com os pontos ganhos/perdidos no mecanismo de corrupção, calculados automaticamente na aba própria.</div>
+  </div>`;
+}
