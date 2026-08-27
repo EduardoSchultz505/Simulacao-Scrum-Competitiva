@@ -1,6 +1,6 @@
 import { fullRender } from "../utils/tabs";
 import { applyFontScale, changeFontScale } from "../utils/Fonte";
-import { handleSave, handleLoadFile, handleReset } from "../storage/Save";
+import { handleSave, handleLoadFile, handleReset } from "../storage/save";
 import { attachDelegatedEvents } from "../utils/eventDelegated";
 
 export function init(STATE_ref, tabRef, setTab, FILE_NAME_ref) {
