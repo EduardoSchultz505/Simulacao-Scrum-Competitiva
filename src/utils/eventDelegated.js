@@ -1,6 +1,6 @@
 import { setByPath } from "./domHelpers";
 import { renderPanel } from "./tabs";
-import { saveToLocalStorage } from "../storage/Persistence";
+import { saveToLocalStorage } from "../storage/persistence";
 import * as XLSX from 'xlsx';
 
 
