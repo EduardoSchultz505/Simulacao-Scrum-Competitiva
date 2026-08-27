@@ -1,5 +1,5 @@
 import { fullRender } from "../utils/tabs";
-import { applyFontScale, changeFontScale } from "../utils/Fonte";
+import { applyFontScale, changeFontScale } from "../utils/fonte";
 import { handleSave, handleLoadFile, handleReset } from "../storage/save";
 import { attachDelegatedEvents } from "../utils/eventDelegated";
 
