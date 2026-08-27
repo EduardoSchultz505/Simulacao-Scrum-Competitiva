@@ -13,7 +13,7 @@ Esse sistema de apoio à avaliação da Simulação Scrum Competitiva foi refeit
 
 ## Link do sistema hospedado
 
-> _(placeholder — adicionar link após o deploy)_
+> https://simulacao-scrum-competitiva.vercel.app/
 
 ## Pré-requisitos
 
