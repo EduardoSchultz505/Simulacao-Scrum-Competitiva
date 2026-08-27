@@ -5,7 +5,7 @@ import TopBar from "./components/Topbar";
 import { fullRender } from "./utils/tabs";
 import { buildInitialData } from "./data/datamodel";
 import { init } from "./components/init";
-import { loadFromLocalStorage } from "./storage/Persistence";
+import { loadFromLocalStorage } from "./storage/persistence";
 
 function App() {
   const STATE_ref = useRef(
