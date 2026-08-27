@@ -2,7 +2,7 @@ import { SEED_NAMES } from "../data/constants";
 import { applyFontScale } from "../utils/fonte";
 import { fullRender } from "../utils/tabs";
 import { buildInitialData } from "../data/datamodel";
-import { saveToLocalStorage, clearLocalStorage } from "./Persistence";
+import { saveToLocalStorage, clearLocalStorage } from "./persistence";
 
 export function handleSave(STATE) {
   saveToLocalStorage(STATE);
