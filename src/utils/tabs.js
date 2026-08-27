@@ -1,5 +1,5 @@
 import renderAlunos from '../components/Alunos';
-import renderEscalacao from '../components/escalacao';
+import renderEscalacao from '../components/Escalacao';
 import renderSM from '../components/ScrumMaster';
 import { renderSetup } from '../components/Configuracao';
 import { renderOwner } from '../components/Owner';
