@@ -1,89 +1,66 @@
-# Simulação Scrum Competitiva
+# Simulação Scrum Competitiva — Versão Desktop (Electron)
 
 Trabalho da disciplina **Desenvolvimento Web 2**.
 
-Esse sistema de apoio à avaliação da Simulação Scrum Competitiva foi refeita, agora, utilizando a biblioteca React. O código original foi proporcionado pelo professor Renato Castro. O grupo deveria dividir o código e organizá-lo em componentes, adicionar função de LocalStorage e hospedar o site, algo que anteriormente não possuia.
+Esta é a versão empacotada como **aplicativo desktop** (Windows) da Simulação Scrum Competitiva. É a mesma aplicação da versão web (branch `main`), rodando dentro de uma janela nativa via Electron, com as mesmas funcionalidades e persistência de dados via `localStorage`.
+
+> A versão web, hospedada, é a entrega principal do trabalho. Esta versão desktop é um adicional. Veja o README do branch `main` para a versão web.
 
 ## Integrantes
 
 - Eduardo Schultz de Oliveira
 - Evelyn Thomaz Mafessoni
 - Guilherme Otávio Riffel Konig
-- Isabella Vitória Fracaro
-
-## Link do sistema hospedado
-
-> _(placeholder — adicionar link após o deploy)_
+- Isabella Fracaro Dalla Costa
 
 ## Pré-requisitos
 
-- [Node.js](https://nodejs.org/)
+- [Node.js](https://nodejs.org/) (recomendado: versão 18 ou superior)
+- npm (já vem junto com o Node.js)
+- Windows (o instalador gerado é `.exe`, target NSIS)
 
 ## Instalação
-
-Clone o repositório e instale as dependências:
 
 ```bash
 git clone <link-do-repositorio>
 cd <pasta-do-projeto>
+git checkout electron
 npm install
 ```
 
-## Executando localmente
+## Rodando em modo desenvolvimento
+
+Abre a aplicação em uma janela do Electron, com hot-reload (conectado ao servidor de desenvolvimento do Vite):
 
 ```bash
-npm run dev
+npm run electron:dev
 ```
 
-Isso inicia o servidor de desenvolvimento do Vite. Por padrão, o sistema fica disponível em:
+## Gerando o instalador
 
+```bash
+npm run electron:build
 ```
-http://localhost:5173
-```
 
-Abra esse endereço no navegador.
+O instalador (`Simulação Scrum Competitiva Setup 1.0.0.exe`) e a versão "descompactada" (pasta `win-unpacked/`) são gerados dentro da pasta `release/`.
 
-## Funcionalidades
+> **Nota:** o instalador não é assinado digitalmente, então o Windows SmartScreen ou o antivírus podem exibir um aviso ao executá-lo pela primeira vez ("Windows protegeu seu PC" ou similar). Isso é esperado — clique em **"Mais informações"** → **"Executar assim mesmo"** para prosseguir. Da mesma forma, durante a geração do instalador, alguns antivírus podem remover o arquivo `.exe` gerado por falso positivo; caso isso ocorra, adicione uma exclusão temporária para a pasta do projeto nas configurações do antivírus.
 
-- **Configuração**: identificação da turma, nomes das empresas, nomes dos times e pesos usados no cálculo da nota final.
-- **Alunos**: atribuição de papel, empresa e time para cada aluno, com busca por nome e importação de lista via planilha Excel (.xlsx).
-- **Escalação**: visão consolidada das equipes, com identidade visual de cada empresa/comprador.
-- **Avaliação por papel**: abas de Scrum Master, Owner/Stakeholder, Product Owner, Developers e Compradores (desempenho no papel e avaliação do produto).
-- **Corrupção & Sabotagem**: mecanismos de regras fixas do jogo, com pontuação calculada automaticamente.
-- **Resultado Final**: nota final por empresa, calculada como média ponderada das notas por papel, ajustada pelos pontos de corrupção/sabotagem.
-- **Persistência**: os dados são salvos automaticamente no `localStorage` do navegador a cada alteração, além de poderem ser salvos/baixados manualmente em `.json` e recarregados posteriormente.
+## Instalando e executando
+
+1. Rode `npm run electron:build`.
+2. Execute o instalador gerado em `release/Simulação Scrum Competitiva Setup 1.0.0.exe`.
+3. Siga o assistente de instalação.
+4. Abra o aplicativo pelo atalho criado (área de trabalho ou menu iniciar).
+
+## Persistência de dados
+
+Assim como na versão web, os dados são salvos automaticamente no armazenamento local do aplicativo a cada alteração, além de poderem ser salvos/baixados manualmente em `.json` e recarregados posteriormente pelos botões correspondentes na interface.
 
 ## Tecnologias utilizadas
 
 - [React](https://react.dev/)
 - [Vite](https://vitejs.dev/)
+- [Electron](https://www.electronjs.org/)
+- [electron-builder](https://www.electron.build/) — empacotamento e geração do instalador
 - [SheetJS (xlsx)](https://sheetjs.com/) — leitura de planilhas Excel para importação de alunos
-
-## Estrutura do projeto
-
-```
-src/
-├── App.jsx                    # componente raiz — estado global, inicialização, orquestração
-├── components/
-│   ├── Alunos.jsx, Owner.jsx, ScrumMaster.jsx, ...  # renderização de cada aba
-│   ├── init.js                # registro dos listeners de UI (botões, fonte, abas)
-│   └── Topbar.jsx             # Barra superior
-├── data/
-│   ├── constants.js           # dados fixos (sprints, times, compradores, papéis, imagens, cores)
-│   └── datamodel.js           # construção do estado inicial (buildInitialData) e função auxiliar avg
-├── storage/
-│   ├── persistence.js         # leitura/escrita no localStorage
-│   └── save.js                # salvar/carregar/resetar dados
-
-├── utils/
-│   ├── domHelpers.js          # geração de HTML reutilizável (selects, inputs) e setByPath
-│   ├── eventDelegated.js      # delegação de eventos (mudanças de campo, renomear empresa, importar Excel)
-│   ├── fonte.js               # definição e alteração de tamanho de fonte
-│   ├── scoring.js             # cálculo de notas e pontuações (corrupção, sabotagem, nota final)
-│   └── tabs.js                # definição das abas e renderização do painel ativo
-```
-
-## Observações
-
-- Os dados ficam salvos no navegador (`localStorage`) enquanto o sistema não for reiniciado ("Resetar"). O botão "Salvar" também gera um arquivo `.json` para backup manual, que pode ser recarregado posteriormente pelo botão "Carregar".
-- As imagens dos fabricantes/setores utilizadas são as fornecidas junto com o código-fonte original.
